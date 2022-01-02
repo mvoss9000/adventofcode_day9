@@ -110,25 +110,30 @@ function fill_basins(a, ncols) {
             let v = val_at(a, ncols, c, r)
             if (v === 0) {
                 let up = val_at(a, ncols, c, r - 1, 1)
-                if (up === 114) {
-                    // log('here')
-                }
                 let left = val_at(a, ncols, c-1, r, 1)
-                if (up !== 1) {
-                    if (left !== up && left !== 1) {
-                        if (ret.remap[left] == null) {
-                            ret.remap[left] = up
-                        }
-                        v = ret.remap[left]
-                    } else {
+                if (up > 1 && left > 1) {
+                    if (left === up) {
                         v = up
-                    }
-                } else {
-                    if (left !== 1) {
-                        v = left
                     } else {
-                        v = basin_id++
+                        let min = Math.min(left, up)
+                        let max = Math.max(left, up)
+                        let prev = ret.remap[max]
+                        if (prev && prev !== min) {
+                            // reset previous to map to the new minimum (merge all to min value)
+                            min = Math.min(min, prev)
+                            if (prev !== min) {
+                                ret.remap[prev] = min
+                            }
+                        }
+                        ret.remap[max] = min
+                        v = min
                     }
+                } else if (up > 1 && left === 1) {
+                    v = up
+                } else if (left > 1 && up === 1) {
+                    v = left
+                } else {
+                    v = basin_id++
                 }
                 a[r * ncols + c] = v
             }
@@ -180,7 +185,6 @@ function check_basins (a, ncols) {
                     let neighbor = val_at(a, ncols, pos[0], pos[1], 1)
                     if (neighbor !== 1 && neighbor !== v) {
                         console.log(`oops:' ${JSON.stringify(pos)}`)
-                        // throw Error(`oops:' ${JSON.stringify(pos)}`)
                     }
                 })
             }
@@ -200,9 +204,6 @@ function part_two () {
     let biggest = counts.slice(-3)
     log(`<br><br><total>biggest basins: ${JSON.stringify(biggest)}</total>`)
     log(`<br><br><total>a*b*c: ${biggest.reduce((sum, rec)=> sum * rec.count, 1)}</total>`)
-
-    // biggest basins: [{"id":408,"count":110},{"id":824,"count":112},{"id":76,"count":126}]
-    // a*b*c: 1552320
 }
 
 if (require.main === module) {
