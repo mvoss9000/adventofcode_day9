@@ -1,14 +1,11 @@
 {
-  "name": "adventofcode_day7",
+  "name": "adventofcode_day9",
   "version": "1.0.0",
   "description": "Day 6 challenge from adventofcode.com",
-  "homepage": "https://github.com/mvoss9000/adventofcode_day7",
-  "url": "https://github.com/mvoss9000/adventofcode_day7/issues",
-  "repository": "mvoss9000/adventofcode_day7",
+  "homepage": "https://github.com/mvoss9000/adventofcode_day9",
+  "url": "https://github.com/mvoss9000/adventofcode_day9/issues",
+  "repository": "mvoss9000/adventofcode_day9",
   "devDependencies": {
-    "tap": "^15.1.5",
-    "tape": "^4.9.1",
-    "test-kit": "^2.9.1"
   },
   "scripts": {
     "test": "tape test.js",
@@ -16,7 +13,7 @@
   },
   "keywords": [
     "adventofcode",
-    "day7",
+    "day9",
     "challenge",
     "javascript",
     "node",
